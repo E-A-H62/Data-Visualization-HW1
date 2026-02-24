@@ -4,7 +4,7 @@ import pandas as pd
 
 """Elena's graphs"""
 # regular bar graph (no gridlines)
-y = [50, 99, 84, 102, 127, 130, 112]
+y = [50, 99, 84, 112, 127, 130, 102]
 x = ["Tomatoes", "Onions", "Potatoes", "Carrots", "Lettuce", "Broccoli", "Cucumbers"]
 plt.title("Vegetables Purchased")
 plt.xlabel("Vegetables")
