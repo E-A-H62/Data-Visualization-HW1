@@ -1,5 +1,7 @@
+from sklearn.datasets import make_blobs
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 
 """Elena's graphs"""
@@ -87,4 +89,68 @@ plt.xlabel("Sepal Length (cm)")
 plt.ylabel("Petal Length (cm)")
 plt.legend()
 plt.tight_layout()
+plt.show()
+
+"""Megan's Graphs"""
+# Creating the dataset
+X, y = make_blobs(n_samples=500, centers=3, n_features=2, random_state=236)
+X = X + 22  # Shift the data to make it more visually appealing
+
+# Scatterplot (no guidelines)
+plt.scatter(X[:, 0], X[:, 1], c="teal", alpha=0.75)
+plt.xlabel('Age (Years)')
+plt.ylabel('Number of Friends')
+plt.title('Age vs. Number of Friends by Level of School')
+plt.show()
+
+# Scatterplot (Colored by cluster + trend line)
+# Calculate the best-fit line
+m, b = np.polyfit(X[:, 0], X[:, 1], 1)
+
+# Create line values
+x_line = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)
+y_line = m * x_line + b
+
+# Plot line
+plt.plot(x_line, y_line, c="black", linestyle="dashed")
+
+# Plot the data
+array = np.array([0,1,2])
+scatter = plt.scatter(X[:, 0], X[:, 1], c=y, cmap="summer", alpha=0.75)
+
+handles, labels = scatter.legend_elements()
+labels = ["Elementary", "High School", "College"]
+
+plt.xlabel('Age (Years)')
+plt.ylabel('Number of Friends')
+plt.title('Age vs. Number of Friends by Levels of School')
+plt.legend(handles, labels, title="Clusters")
+plt.show()
+
+
+# Scatterplot (Data Aggregation)
+# Calculate centroids for each cluster
+centroids = np.array([
+    X[y == cluster].mean(axis=0)
+    for cluster in np.unique(y)
+])
+
+# Plot the data
+array = np.array([0,1,2])
+scatter = plt.scatter(X[:, 0], X[:, 1], c=y, cmap="summer", alpha=0.5)
+
+handles, labels = scatter.legend_elements()
+labels = ["Elementary (mean)", "High School (mean)", "College (mean)"]
+plt.scatter(
+    centroids[:, 0],
+    centroids[:, 1],
+    c=array,
+    cmap="summer",
+    edgecolors="black",
+    s=200  # size of marker
+)
+plt.xlabel('Age (Years)')
+plt.ylabel('Number of Friends')
+plt.title('Age vs. Number of Friends by Levels of School')
+plt.legend(handles, labels, title="Clusters")
 plt.show()
